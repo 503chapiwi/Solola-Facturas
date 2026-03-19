@@ -122,16 +122,29 @@ if st.button("INICIAR PROCESO") and uploaded_pdfs and uploaded_xlsx:
             st.error(f"No encontré las columnas base en el Excel.")
             st.stop()
 
+        department_name = 'solola'
+        
         # 2. MASTER MUNICIPALITY DICTIONARY
         MUNICIPIOS = {
-            1: {"nombre_oficial": "Totonicapán", "alias_pdf": ["totonicapan totonicapan", "totonicapan, totonicapan", "totonicapan"]},
-            2: {"nombre_oficial": "San Cristóbal Totonicapán", "alias_pdf": ["san cristobal totonicapan", "san cristobal"]},
-            3: {"nombre_oficial": "San Francisco El Alto", "alias_pdf": ["san francisco el alto", "san francisco"]},
-            4: {"nombre_oficial": "San Andrés Xecul", "alias_pdf": ["san andres xecul", "san andres"]},
-            5: {"nombre_oficial": "Momostenango", "alias_pdf": ["momostenango"]},
-            6: {"nombre_oficial": "Santa María Chiquimula", "alias_pdf": ["santa maria chiquimula", "sta maria chiquimula", "santa maria", "sta maria"]},
-            7: {"nombre_oficial": "Santa Lucía La Reforma", "alias_pdf": ["santa lucia la reforma", "sta lucia la reforma", "santa lucia", "sta lucia"]},
-            8: {"nombre_oficial": "San Bartolo Aguas Calientes", "alias_pdf": ["san bartolo aguas calientes", "san bartolo"]}
+            1: {"nombre_oficial": "concepcion", "alias_pdf": [""]},
+            2: {"nombre_oficial": "nahuala", "alias_pdf": [""]},
+            3: {"nombre_oficial": "panajachel", "alias_pdf": [""]},
+            4: {"nombre_oficial": "san andres semetabaj", "alias_pdf": ["san andres"]},
+            5: {"nombre_oficial": "san antonio palopo", "alias_pdf": ["san antonio"]},
+            6: {"nombre_oficial": "san jose chacaya", "alias_pdf": ["san jose"]},
+            7: {"nombre_oficial": "san juan la laguna", "alias_pdf": ["san juan"]},
+            8: {"nombre_oficial": "san lucas toliman", "alias_pdf": ["san lucas"]},
+            9: {"nombre_oficial": "san marcos la laguna", "alias_pdf": ["san marcos"]},
+            10: {"nombre_oficial": "san pablo la laguna", "alias_pdf": ["san pablo"]},
+            11: {"nombre_oficial": "san pedro la laguna", "alias_pdf": ["san pedro"]},
+            12: {"nombre_oficial": "santa catarina ixtahuacan", "alias_pdf": ["ixtahuacan"]},
+            13: {"nombre_oficial": "san catarina palopo", "alias_pdf": [""]},
+            14: {"nombre_oficial": "santa clara la laguna", "alias_pdf": ["santa clara"]},
+            15: {"nombre_oficial": "santa cruz la laguna", "alias_pdf": ["santa cruz"]},
+            16: {"nombre_oficial": "santa lucia utatlan", "alias_pdf": ["santa lucia"]},
+            17: {"nombre_oficial": "santa maria visitacion", "alias_pdf": ["santa maria"]},
+            18: {"nombre_oficial": "santiago atitlan", "alias_pdf": ["santiago"]},
+            19: {"nombre_oficial": "solola", "alias_pdf": [""]},
         }
         
         search_list = []
@@ -141,11 +154,17 @@ if st.button("INICIAR PROCESO") and uploaded_pdfs and uploaded_xlsx:
                 
         # CORE FIX: Sorts the list so Totonicapán (ID 1) is ALWAYS evaluated last.
         # Within the other municipalities, sorts by length to catch specific names first.
-        search_list.sort(key=lambda x: (x[1] == 1, -len(x[0])))
+        search_list.sort(key=lambda x: (
+            squish_text(x[2]) == squish_text(DEPARTMENT_NAME),
+            -len(x[0])
+        ))
 
         EXCEL_MAPPINGS = {
-            1: "totonicapán", 2: "san cristobal", 3: "san francisco", 4: "san andres",
-            5: "momostenango", 6: "santa maria", 7: "santa lucia", 8: "san bartolo"
+            1: "concepcion", 2: "nahuala", 3: "panajachel", 4: "san andres semetabaj", 
+            5: "san antonio palopo", 6: "san jose chacaya", 7: "san juan la laguna", 8: "san lucas toliman", 
+            9: "san marcos la laguna", 10: "san pablo la laguna", 11: "san pedro la laguna", 12: "santa catarina ixtahuacan", 
+            13: "santa catarina palopo", 14: "santa clara la laguna", 15: "santa cruz la laguna", 16: "santa lucia utatlan", 
+            17: "santa maria visitacion", 18: "santiago atitlan", 19: "solola"
         }
 
         # 3. Map Excel Rows to Municipalities
